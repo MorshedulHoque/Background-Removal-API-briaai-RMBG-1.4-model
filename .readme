@@ -1,0 +1,5 @@
+1. Create virtual environment (Not required)
+
+2.pip install torch torchvision pillow numpy typing scikit-image huggingface_hub transformers>=4.39.1 flask opencv-python
+
+3. Run project: python app.py

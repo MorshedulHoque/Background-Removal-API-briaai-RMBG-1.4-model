@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Upload and Processing</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .upload-form {
+            width: 100%;
+            max-width: 500px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .upload-form input[type="file"] {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+        .upload-form input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .upload-form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .image-container {
+            width: 100%;
+            max-width: 8000px;
+            display: flex;
+            justify-content: space-around; /* Adjusted for spacing */
+            flex-wrap: nowrap; /* Prevent wrapping */
+        }
+        .image-box {
+            flex: 1; /* Adjusted for flexible box sizing */
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            text-align: center;
+            margin: 0 10px; /* Added for spacing between images */
+        }
+        .image-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        h3 {
+            color: #333;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="upload-form">
+    <h2>Upload Image</h2>
+    <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+</div>
+
+{% if uploaded_img_url and processed_img_url %}
+<div class="image-container">
+    <div class="image-box">
+        <h3>Before</h3>
+        <img src="{{ uploaded_img_url }}" alt="Uploaded Image">
+    </div>
+    <div class="image-box">
+        <h3>After</h3>
+        <img src="{{ processed_img_url }}" alt="Processed Image">
+    </div>
+</div>
+{% endif %}
+
+</body>
+</html>
