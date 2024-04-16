@@ -23,9 +23,11 @@ def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
             return 'No file part'
+        
         file = request.files['file']
         if file.filename == '':
             return 'No selected file'
+        
         if file and allowed_file(file.filename):
             # Sanitize the original filename
             original_filename = file.filename.replace(" ", "_")
@@ -45,7 +47,6 @@ def upload_file():
 
             # Process the image to remove the background
             pipe = pipeline("image-segmentation", model="briaai/RMBG-1.4", trust_remote_code=True)
-            pillow_mask = pipe(file_path, return_mask=True)
             pillow_image = pipe(file_path)  # Apply mask on input and return a pillow image
 
             # Define the processed file path with PNG extension and the new filename
@@ -59,12 +60,15 @@ def upload_file():
             uploaded_img_url = url_for('static', filename=f'uploads/{new_filename}')
             processed_img_url = url_for('static', filename=f'processed/{processed_filename}')
 
-            # Render a template to display both images
-            return render_template('show_images.html', uploaded_img_url=uploaded_img_url, processed_img_url=processed_img_url)
+            # Return the URLs of the uploaded and processed images
+            return {
+                'uploaded_img_url': uploaded_img_url,
+                'processed_img_url': processed_img_url
+            }
         else:
             return 'Only PNG and JPG files are allowed'
 
-    return render_template('show_images.html')
+    return 'Upload image via POST request'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
